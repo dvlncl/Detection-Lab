@@ -1,4 +1,4 @@
-# PROJECTNAME
+# Detection LAB
 
 ## Objective
 [Brief Objective - Remove this afterwards]
@@ -28,4 +28,4 @@ Every screenshot should have some text explaining what the screenshot is about.
 
 Example below.
 
-*Ref 1: Network Diagram*
+<img src="https://lucid.app/publicSegments/view/abbc32b4-254f-4275-92d7-cc4306ef6fdc/image.png"></img>
