@@ -33,7 +33,7 @@
   <li><strong>Event ID 6, 7, 8 – Driver Load, Image Load, Create Remote Thread:</strong> May indicate defense evasion or process injection techniques.</li>
   <li><strong>Event ID 10 – Process Access:</strong> Used to detect access to critical processes like LSASS (often for credential theft).</li>
   <li><strong>Event ID 22 – DNS Query:</strong> Reveals domains being resolved. Useful for spotting DGA-based malware or C2 communications.</li>
-  <li><a href="https://github.com/dvinci200570197/Detection-Lab/new/main#%EF%B8%8F-sysmon-event-ids--real-world-monitoring-reference">Click here for more</a></li>
+  <li><a href="https://github.com/dvinci200570197/Detection-Lab/blob/main/%F0%9F%AA%B5Sysmon.md">Click here for more</a></li>
 </ul>
 
 <h3>⚠️ Important Notes</h3>
