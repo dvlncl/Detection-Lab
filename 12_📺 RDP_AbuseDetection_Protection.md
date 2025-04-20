@@ -97,9 +97,3 @@
   <li>🔐 Use strong, unique passwords</li>
   <li>👤 Avoid default accounts</li>
 </ul>
-
-<p>In the next session, we’ll review <strong>RDP logs from your Windows server</strong> and configure an <strong>alert for RDP brute force activity</strong>.</p>
-
-<hr/>
-
-<p>🚀 <strong>Stay curious, and do things differently!</strong></p>
