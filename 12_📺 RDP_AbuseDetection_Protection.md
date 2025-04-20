@@ -1,4 +1,4 @@
-<h2>🖥️ Day 15 – RDP Abuse: Detection & Protection</h2>
+<h2>📺 RDP Abuse: Detection & Protection</h2>
 
 <p>Welcome to Day 15 of the 30-Day MYDFIR SOC Analyst Challenge! Today, we explore one of the most abused protocols in cybersecurity incidents: <strong>Remote Desktop Protocol (RDP)</strong>.</p>
 
