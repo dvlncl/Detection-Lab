@@ -31,4 +31,5 @@ The Detection Lab project aimed to establish a controlled environment for simula
 30+ Hands-on Labs:</br> Covering various aspects of security operations. </br>
 5 SOC-Related Projects: Real-world scenarios to apply your knowledge. </br>
 Final Capstone Project: A comprehensive investigation report to test your skills. </br>
+<a href="https://academy.mydfir.com/p/soc">  MyDFIR SOC Analyst Course </a>
 </p>
