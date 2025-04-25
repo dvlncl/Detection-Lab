@@ -7,7 +7,7 @@
 <ol>
   <li>Log into your Elasticsearch/Kibana instance.</li>
   <li>Click <strong>Add Integrations</strong> on the homepage.</li>
-  <li>Search for <strong>Windows Event Logs</strong> (not Sysmon for Linux).</li>
+  <li>Search for <strong>Custom Windows Event Logs</strong> (not Sysmon for Linux).</li>
   <li>Select <strong>Custom Windows Event Logs</strong> integration.</li>
 </ol>
 
