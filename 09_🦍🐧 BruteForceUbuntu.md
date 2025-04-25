@@ -79,5 +79,5 @@ cat auth.log</code></pre>
   <li>Used Linux command-line tools to filter and analyze logs</li>
 </ul>
 
-<p>What you saw in <code>auth.log</code> are brute force attempts — just like those discussed on <strong>Day 11</strong>.</p>
+<p>What you saw in <code>auth.log</code> are brute force attempts.</p>
 
