@@ -1,6 +1,5 @@
 <h2>🦍 Brute Force Attacks and How to Defend Against Them</h2>
 
-<p>Welcome to Day 11 of the <strong>30-Day MYDFIR SOC Analyst Challenge</strong>! In this session, we’ll explore brute force attacks — one of the most common threats you'll observe in nearly every environment. You'll learn:</p>
 <ul>
   <li>✅ What a brute force attack is</li>
   <li>🛠 Tools attackers use</li>
