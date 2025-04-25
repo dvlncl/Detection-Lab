@@ -110,9 +110,4 @@ systemctl status elasticsearch.service
     <p>You should see <strong>active (running)</strong> status ✅</p>
   </div>
 
-  <div class="section">
-    <h2>🎉 You're Done!</h2>
-    <p>You now have a working Elasticsearch node.</p>
-    <p>Next up: <strong>Installing Kibana</strong> and building your SOC dashboard.</p>
-  </div>
 
