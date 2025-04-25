@@ -5,7 +5,7 @@
     <ol>
       <li>Visit <a href="https://www.elastic.co/downloads/kibana" target="_blank">Elastic Downloads - Kibana</a></li>
       <li>Choose <code>.deb (x86_64)</code> version (e.g., 8.15)</li>
-      <li>Copy the download link and run:
+      <li>Right click on the button and Copy the download link and run:
         <pre>wget [download-link]</pre>
       </li>
       <li>Install it:
