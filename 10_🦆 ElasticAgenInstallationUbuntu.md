@@ -1,6 +1,5 @@
 <h2>🦆 Installing the Elastic Agent on Your SSH Server</h2>
 
-<p>Welcome to Day 13 of the 30-Day MYDFIR SOC Analyst Challenge! In this session, you'll:</p>
 <ul>
   <li>🔌 Install the Elastic Agent on your Day 12 SSH server</li>
   <li>📥 Forward logs into your Elasticsearch instance</li>
