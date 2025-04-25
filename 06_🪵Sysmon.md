@@ -47,8 +47,3 @@
 
 <h3>📚 Explore More Event IDs</h3>
 <p>Sysmon v15.15 supports 30+ event types. You are encouraged to explore all of them and tailor your configuration to fit your threat model. A full reference link is usually provided in training content or Microsoft's official documentation.</p>
-
-<h3>🎯 What’s Next?</h3>
-<p>In the next video, you'll learn how to install Sysmon using a popular community configuration so you can start collecting these powerful logs and apply them in real investigations.</p>
-
-<p>Thank you for following along with Day 8 of the 30-Day DFIR for SOC Analyst Challenge. Stay curious, and do things differently.</p>
