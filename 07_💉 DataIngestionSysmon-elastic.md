@@ -19,6 +19,7 @@
   <li>Find the Sysmon event channel name:
     <ul>
       <li>RDP into your Windows Server</li>
+      <li>Windows Key + R and type <i>eventvwr</i></li>
       <li>Open <strong>Event Viewer</strong> → Applications and Services Logs → Microsoft → Windows → Sysmon → Operational</li>
       <li>Right-click <strong>Operational</strong> → Properties → copy <strong>Full Name</strong></li>
     </ul>
