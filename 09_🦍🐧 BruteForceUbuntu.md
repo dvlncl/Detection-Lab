@@ -1,6 +1,5 @@
 <h2>🐧 Setting Up an SSH Server and Monitoring Authentication Logs</h2>
 
-<p>Welcome to Day 12 of the 30-Day MYDFIR SOC Analyst Challenge! In this session, you'll:</p>
 <ul>
   <li>🚀 Deploy an SSH server in the cloud</li>
   <li>🧪 Review real-time authentication logs</li>
@@ -82,6 +81,3 @@ cat auth.log</code></pre>
 
 <p>What you saw in <code>auth.log</code> are brute force attempts — just like those discussed on <strong>Day 11</strong>.</p>
 
-<p>In the next lesson, you'll install the Elastic Agent on your SSH server and begin forwarding logs to Elasticsearch for centralized monitoring.</p>
-
-<p>💡 <strong>Stay curious and do things differently.</strong></p>
