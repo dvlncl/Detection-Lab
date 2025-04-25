@@ -81,8 +81,4 @@ cd /usr/share/kibana/bin
     </ol>
   </div>
 
-  <div class="section">
-    <h2>✅ Done!</h2>
-    <p>You have successfully installed and configured Kibana.</p>
-    <p>Next up: <strong>Setting up a Windows Server (Day 5)</strong>.</p>
-  </div>
+
