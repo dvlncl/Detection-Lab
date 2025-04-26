@@ -8,7 +8,7 @@
 <ul>
   <li>Access <strong>Discover</strong> in Elastic.</li>
   <li>Set time frame to "Today".</li>
-  <li>Filter by agent.name (e.g., <code>mydfir-win-stephenrocks</code>).</li>
+  <li>Filter by agent.name (e.g., <code>mydfir-win-LABNAME</code>).</li>
 </ul>
 
 <h3>2. 🔑 Identify Failed Authentication Events</h3>
