@@ -1,6 +1,5 @@
 <h2>📺 RDP Abuse: Detection & Protection</h2>
 
-<p>Welcome to Day 15 of the 30-Day MYDFIR SOC Analyst Challenge! Today, we explore one of the most abused protocols in cybersecurity incidents: <strong>Remote Desktop Protocol (RDP)</strong>.</p>
 
 <blockquote>🔐 According to Sophos, RDP abuse was found in over 90% of ransomware breaches in 2023.</blockquote>
 
