@@ -1,7 +1,7 @@
 <h1>Windows Logon Types (Including RDP)</h1>
 
 <p>When a user logs into a Windows machine (especially via RDP), it generates a <strong>logon event</strong> (like <strong>Event ID 4624</strong> in Security logs). 
-The event will have a <strong>Logon Type</strong>, and each type means something different.</p>
+The event will have a <strong>Logon Type</strong>, and each type means something different. Below is an expanded table that also shows the typical <strong>protocols used</strong> for each logon type.</p>
 
 <table border="1" cellpadding="5" cellspacing="0">
   <thead>
@@ -10,6 +10,7 @@ The event will have a <strong>Logon Type</strong>, and each type means something
       <th>Name</th>
       <th>Meaning</th>
       <th>Used for RDP?</th>
+      <th>Common Protocols</th>
     </tr>
   </thead>
   <tbody>
@@ -18,54 +19,63 @@ The event will have a <strong>Logon Type</strong>, and each type means something
       <td>Interactive</td>
       <td>User logged on directly at the console (keyboard + monitor physically attached)</td>
       <td>No</td>
+      <td>Local Console Session</td>
     </tr>
     <tr>
       <td>3</td>
       <td>Network</td>
       <td>Network-based logon (like accessing a shared folder over SMB)</td>
       <td>No</td>
+      <td>SMB, CIFS, HTTP(S), LDAP</td>
     </tr>
     <tr>
       <td>4</td>
       <td>Batch</td>
       <td>Used for scheduled tasks</td>
       <td>No</td>
+      <td>Task Scheduler</td>
     </tr>
     <tr>
       <td>5</td>
       <td>Service</td>
       <td>Service account starting automatically</td>
       <td>No</td>
+      <td>Windows Service Control Manager (SCM)</td>
     </tr>
     <tr>
       <td>7</td>
       <td>Unlock</td>
       <td>Unlocking a locked computer</td>
       <td>No</td>
+      <td>Local Console</td>
     </tr>
     <tr>
       <td>8</td>
       <td>NetworkCleartext</td>
-      <td>Credentials are passed in clear text over the network (rare, insecure)</td>
+      <td>Credentials passed in clear text over the network (rare, insecure)</td>
       <td>No</td>
+      <td>HTTP Basic Auth, older LDAP auth</td>
     </tr>
     <tr>
       <td>9</td>
       <td>NewCredentials</td>
-      <td>"RunAs" with different credentials</td>
+      <td>"RunAs" with different credentials (without reauthenticating the original session)</td>
       <td>No</td>
+      <td>SSPI (Security Support Provider Interface)</td>
     </tr>
     <tr>
       <td>10</td>
       <td>RemoteInteractive</td>
       <td>Remote Desktop logon (Terminal Services, RDP sessions)</td>
       <td><strong>YES ✅</strong></td>
+      <td>RDP (Remote Desktop Protocol), VDI</td>
     </tr>
     <tr>
       <td>11</td>
       <td>CachedInteractive</td>
       <td>Login using cached credentials (e.g., when offline)</td>
       <td>No</td>
+      <td>Local Security Authority (LSA) Cached Credentials</td>
     </tr>
   </tbody>
 </table>
