@@ -84,4 +84,5 @@
 </ol>
 
 <p>✅ You now have two brute force alerts: SSH (Ubuntu) and RDP (Windows).</p>
+<p><a href="https://github.com/dvinci200570197/Detection-Lab/blob/main/%F0%9F%94%A2%20LogonType.md">Click Here for the birds eyeview of Logon Types</a></p>
 
