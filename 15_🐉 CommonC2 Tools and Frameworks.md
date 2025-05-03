@@ -1,8 +1,6 @@
 <h2>📚 Intro</h2>
 <ul>
-  <li>Welcome to Day 18 of the 30-Day MYDFIR SOC Analyst Challenge.</li>
   <li>Goal: Understand Command and Control (C2) concepts, importance, common tools, and introduce the Mythic Framework.</li>
-  <li>Encouragement to start from Day 1 if new to the challenge.</li>
 </ul>
 
 <h2>🦠 What Happens When You Execute Malware?</h2>
