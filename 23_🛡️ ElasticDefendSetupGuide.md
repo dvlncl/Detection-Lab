@@ -1,13 +1,25 @@
-<h2>🛡️ Elastic Defend Setup Guide</h2>
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#prerequisites">📋 Prerequisites</a></li>
+    <li><a href="#step-1">🔧 Step 1: Add Elastic Defend Integration</a></li>
+    <li><a href="#step-2">💽 Step 2: Install and Enroll Elastic Agent</a></li>
+    <li><a href="#step-3">🧪 Step 3: Test Malware Detection</a></li>
+    <li><a href="#step-4">🔄 Step 4: Configure Automated Response</a></li>
+    <li><a href="#step-5">📊 Step 5: Analyze Telemetry</a></li>
+  </ul>
+</nav>
 
-<h3>📋 Prerequisites</h3>
+<h2 id="elastic-defend-setup">🛡️ Elastic Defend Setup Guide</h2>
+
+<h3 id="prerequisites">📋 Prerequisites</h3>
 <ul>
   <li>Elastic Stack (Elasticsearch + Kibana) is up and running</li>
   <li>Fleet Server is configured</li>
   <li>Admin access to Kibana</li>
 </ul>
 
-<h3>🔧 Step 1: Add Elastic Defend Integration</h3>
+<h3 id="step-1">🔧 Step 1: Add Elastic Defend Integration</h3>
 <ol>
   <li>Open <strong>Kibana</strong> and click on the ☰ <em>hamburger menu</em></li>
   <li>Go to <strong>Management &gt; Integrations</strong></li>
@@ -25,7 +37,7 @@
   <li>Click <strong>Save and continue</strong> &gt; <strong>Save and deploy changes</strong></li>
 </ol>
 
-<h3>🖥️ Step 2: Install and Enroll Elastic Agent</h3>
+<h3 id="step-2">💽 Step 2: Install and Enroll Elastic Agent</h3>
 <ol>
   <li>Go to <strong>Management &gt; Fleet &gt; Agents</strong></li>
   <li>Click <strong>Add Agent</strong>, select the same policy used above</li>
@@ -34,7 +46,7 @@
   <li>Verify enrollment under <strong>Fleet Agents</strong> and <strong>Security &gt; Endpoints</strong></li>
 </ol>
 
-<h3>🧪 Step 3: Test Malware Detection</h3>
+<h3 id="step-3">🧪 Step 3: Test Malware Detection</h3>
 <ol>
   <li>Attempt to execute a test malware (e.g., <code>mydfir-d30.exe</code>)</li>
   <li>Elastic Defend should:
@@ -47,7 +59,7 @@
   <li>View details under <strong>Discover</strong> and <strong>Security &gt; Alerts</strong></li>
 </ol>
 
-<h3>🔄 Step 4: Configure Automated Response</h3>
+<h3 id="step-4">🔄 Step 4: Configure Automated Response</h3>
 <ol>
   <li>Navigate to <strong>Security &gt; Rules</strong></li>
   <li>Find <code>Malware Prevention Alert</code> &gt; click <strong>Edit Rule Settings</strong></li>
@@ -63,7 +75,7 @@
   <li>Verify the host is marked as <strong>Isolated</strong> under <strong>Endpoints</strong></li>
 </ol>
 
-<h3>📊 Step 5: Analyze Telemetry</h3>
+<h3 id="step-5">📊 Step 5: Analyze Telemetry</h3>
 <ul>
   <li>Go to <strong>Security &gt; Alerts</strong></li>
   <li>View:
