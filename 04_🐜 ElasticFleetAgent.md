@@ -1,44 +1,51 @@
-<div class="section">
-  <h1>🐜 Fleet Server and Elastic Agent</h1>
+<h1>Fleet Server and Elastic Agent Lab Overview</h1>
 
-  <h2>🎯 Why Fleet Server?</h2>
-  <p>Imagine installing an agent on 100+ machines and forgetting to enable PowerShell log forwarding. Manually updating every endpoint is inefficient. Instead, a Fleet Server provides a centralized way to manage Elastic Agents, including configuration updates and integration management.</p>
-</div>
-
-<div class="section">
-  <h2>🔧 What is Elastic Agent?</h2>
+<nav>
+  <h3>📚 Table of Contents</h3>
   <ul>
-    <li>Elastic Agent is a unified way to collect logs, metrics, and security data.</li>
-    <li>Uses policies for configuration and integrations.</li>
-    <li>Supports standalone or fleet-managed installation.</li>
-    <li>Ideal for managing multiple data types from one endpoint.</li>
+    <li><a href="#why">Why Use Fleet Server?</a></li>
+    <li><a href="#agent">What is Elastic Agent?</a></li>
+    <li><a href="#comparison">Elastic Agent vs Beats</a></li>
+    <li><a href="#fleetserver">What is a Fleet Server?</a></li>
   </ul>
-</div>
+</nav>
 
-<div class="section">
-  <h2>📚 Elastic Agent vs Beats</h2>
-  <p><strong>Beats:</strong></p>
-  <ul>
-    <li>Filebeat, Metricbeat, Winlogbeat, Auditbeat, etc.</li>
-    <li>Each beat collects specific data type — may need multiple installed on one host.</li>
-  </ul>
-  <p><strong>Elastic Agent:</strong></p>
-  <ul>
-    <li>One agent to rule them all — simplifies deployment.</li>
-    <li>Can replace multiple Beats.</li>
-    <li>Integrates with Fleet for centralized management.</li>
-  </ul>
-  <p>👉 Elastic Agent is preferred for most modern use cases.</p>
-</div>
+<h2 id="why">🎯 Why Use Fleet Server?</h2>
+<p>
+  Imagine installing an agent on 100+ machines and later realizing you forgot to enable PowerShell log forwarding.  
+  Manually updating each endpoint would be inefficient and error-prone.  
+  <strong>Fleet Server</strong> solves this by providing centralized control over all Elastic Agents — for updates, policy changes, and integrations.
+</p>
 
-<div class="section">
-  <h2>🌐 What is a Fleet Server?</h2>
-  <ul>
-    <li>A component that connects Elastic Agents to the Fleet UI.</li>
-    <li>Allows for centralized configuration and updates.</li>
-    <li>Supports new integrations and uninstallation of agents.</li>
-    <li>Makes log routing flexible between Elasticsearch and Logstash.</li>
-  </ul>
-</div>
+<h2 id="agent">🔧 What is Elastic Agent?</h2>
+<ul>
+  <li>Elastic Agent is a single, unified agent for collecting logs, metrics, and security data.</li>
+  <li>Uses **policies** to apply configurations and enable integrations.</li>
+  <li>Can run in **standalone mode** or be managed through Fleet.</li>
+  <li>Great for environments needing consolidated data collection across endpoints.</li>
+</ul>
 
+<h2 id="comparison">📚 Elastic Agent vs Beats</h2>
+<p><strong>Beats:</strong></p>
+<ul>
+  <li>Includes Filebeat, Metricbeat, Winlogbeat, Auditbeat, etc.</li>
+  <li>Each Beat is installed separately to collect a specific data type.</li>
+  <li>Multiple Beats may need to run on the same host.</li>
+</ul>
 
+<p><strong>Elastic Agent:</strong></p>
+<ul>
+  <li>Consolidated solution — replaces the need for multiple Beats.</li>
+  <li>Easier deployment, maintenance, and configuration.</li>
+  <li>Integrates seamlessly with the Fleet UI for central management.</li>
+</ul>
+
+<p>👉 <strong>Elastic Agent</strong> is the modern, preferred option for most deployment scenarios.</p>
+
+<h2 id="fleetserver">🌐 What is a Fleet Server?</h2>
+<ul>
+  <li>Fleet Server connects all Elastic Agents to the **Fleet UI** in Kibana.</li>
+  <li>It acts as a control plane for centralized configuration and policy management.</li>
+  <li>Supports agent updates, integration installs, and removals across systems.</li>
+  <li>Can route logs flexibly — either directly to Elasticsearch or via Logstash.</li>
+</ul>
