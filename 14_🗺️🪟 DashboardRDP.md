@@ -1,59 +1,93 @@
-<h2>🖥️ Demo</h2>
-<ul>
-  <li>Access Elastic Web GUI and navigate to <strong>Maps</strong> via the hamburger menu.</li>
-  <li>Recall the saved Discover search query for failed RDP authentications.</li>
-  <li>Query used: <code>event.code:4625 AND agent.name:mydfir-win-stephenrocks</code>.</li>
-</ul>
+<h1>Authentication Visualization: Maps & Dashboards (RDP + SSH)</h1>
 
-<h2>🔎 Creating Map for Failed Authentications</h2>
-<ul>
-  <li>In Maps, add a new layer: select <strong>choropleth map</strong>.</li>
-  <li>Use <strong>World Countries</strong> as the boundary.</li>
-  <li>Join field: <code>source.geo.country_iso_code</code>.</li>
-  <li>Result: 39,000+ failed RDP attempts from Russia.</li>
-  <li>Save the map under the title: <strong>RDP Failed Authentication</strong>.</li>
-  <li>Link to existing dashboard: <strong>mydfir-authentication-activity</strong>.</li>
-</ul>
-
-<h2>🚀 Creating Map for Successful Authentications</h2>
-<ul>
-  <li>Switch Discover query to <code>event.code:4624</code> (successful authentications).</li>
-  <li>Identify successful RDP login attempts using logon types 10 and 7.</li>
-  <li>Field: <code>winlog.event_data.LogonType</code> (10 or 7).</li>
-  <li>Save search as: <strong>RDP Successful Activity</strong>.</li>
-  <li>Duplicate map layer, adjust query, and save as <strong>RDP Successful Authentications</strong>.</li>
-</ul>
-
-<h2>📈 Building Visualization Tables</h2>
-<ul>
-  <li>Create tables in Visualizations instead of bar charts.</li>
-  <li>Fields to add: Username, Source IP, Country.</li>
-  <li>Steps:</li>
+<nav>
+  <h3>📚 Table of Contents</h3>
   <ul>
-    <li>Sort counts descending.</li>
-    <li>Adjust 'Top Values' from 3 to 10.</li>
-    <li>Uncheck "Group remaining values as Other" under Advanced settings.</li>
+    <li><a href="#demo">Demo: Start with Maps</a></li>
+    <li><a href="#map-failed">Create Map for Failed Authentications</a></li>
+    <li><a href="#map-success">Create Map for Successful Authentications</a></li>
+    <li><a href="#tables">Build Visualization Tables</a></li>
+    <li><a href="#dashboard">Improve Dashboard Layout</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
-  <li>Save visualizations as:</li>
-  <ul>
-    <li><strong>SSH Failed Authentications (Table)</strong></li>
-    <li><strong>SSH Successful Authentications (Table)</strong></li>
-    <li><strong>RDP Failed Authentications (Table)</strong></li>
-    <li><strong>RDP Successful Authentications (Table)</strong></li>
-  </ul>
-</ul>
+</nav>
 
-<h2>🧩 Improving the Dashboard</h2>
+<h2 id="demo">🖥️ Demo: Start with Maps</h2>
 <ul>
-  <li>Align maps and tables together for better at-a-glance review.</li>
-  <li>Display usernames, IPs, and country names for both failed and successful SSH and RDP authentications.</li>
-  <li>Adjust dashboard time frames for recent activity (15 minutes, 7 days, etc.).</li>
+  <li>Open <strong>Elastic GUI → Maps</strong> via the ☰ hamburger menu</li>
+  <li>Recall your saved search for failed RDP login events</li>
+  <li>Query example:
+    <pre><code>event.code:4625 AND agent.name:mydfir-win-stephenrocks</code></pre>
+  </li>
 </ul>
 
-<h2>🧠 Conclusion</h2>
+<h2 id="map-failed">🔎 Create Map for Failed Authentications</h2>
+<ol>
+  <li>In Maps, click <strong>Add Layer → Choropleth map</strong></li>
+  <li>Use <strong>World Countries</strong> for the boundary layer</li>
+  <li>Join field:
+    <pre><code>source.geo.country_iso_code</code></pre>
+  </li>
+  <li>Observe high activity: e.g., 39,000+ failed RDP attempts from Russia</li>
+  <li>Save map as: <strong>RDP Failed Authentication</strong></li>
+  <li>Attach it to dashboard: <code>mydfir-authentication-activity</code></li>
+</ol>
+
+<h2 id="map-success">🚀 Create Map for Successful Authentications</h2>
+<ol>
+  <li>Switch to query:
+    <pre><code>event.code:4624</code></pre>
+  </li>
+  <li>Filter by logon types:
+    <pre><code>winlog.event_data.LogonType: 10 OR 7</code></pre>
+  </li>
+  <li>Save search as: <code>RDP Successful Activity</code></li>
+  <li>Duplicate previous map layer and update the query to reflect success events</li>
+  <li>Save updated map as: <strong>RDP Successful Authentications</strong></li>
+</ol>
+
+<h2 id="tables">📈 Build Visualization Tables</h2>
+<ol>
+  <li>Go to <strong>Visualizations</strong> → <strong>Create Table</strong></li>
+  <li>Add fields:
+    <ul>
+      <li>user.name</li>
+      <li>source.ip</li>
+      <li>source.geo.country_name</li>
+    </ul>
+  </li>
+  <li>Adjust table settings:
+    <ul>
+      <li>Sort by count descending</li>
+      <li>Set top values from 3 to 10</li>
+      <li>Uncheck “Group remaining values as Other”</li>
+    </ul>
+  </li>
+  <li>Save four visualizations:
+    <ul>
+      <li><code>SSH Failed Authentications (Table)</code></li>
+      <li><code>SSH Successful Authentications (Table)</code></li>
+      <li><code>RDP Failed Authentications (Table)</code></li>
+      <li><code>RDP Successful Authentications (Table)</code></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="dashboard">🧩 Improve Dashboard Layout</h2>
 <ul>
-  <li>Now have two maps and two tables for both RDP and SSH activities (failed and successful).</li>
-  <li>Encouraged to create additional visualizations and dashboards for practice.</li>
+  <li>Place both map layers and table visualizations into one unified dashboard</li>
+  <li>Label and align sections for:
+    <ul>
+      <li>Failed vs. Successful</li>
+      <li>RDP vs. SSH</li>
+    </ul>
+  </li>
+  <li>Adjust dashboard time filters (e.g., Last 15 minutes, Last 7 days)</li>
 </ul>
 
-
+<h2 id="conclusion">🧠 Conclusion</h2>
+<ul>
+  <li>Visualized both failed and successful RDP and SSH login activity</li>
+  <li>Built maps and tables for better investigation and threat intel</li>
+  <li>Encouraged to create more advanced visualizations using filters, heatmaps, and timelines</li>
+</ul>
