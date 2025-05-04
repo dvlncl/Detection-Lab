@@ -1,71 +1,94 @@
-<h2>🖥️ Demo</h2>
-<ul>
-  <li>Access Elastic Web GUI and select <strong>Discover</strong>.</li>
-  <li>Time frame: Set to "Today" (~94,000 events).</li>
-  <li>Filter for the RDP server by agent.name.</li>
-</ul>
+<h1>RDP & SSH Brute Force Detection: Demo, Alerts, and Rule Building</h1>
 
-<h2>🔎 Finding Failed Authentications</h2>
-<ul>
-  <li>Identify Event ID <strong>4625</strong> (failed authentication).</li>
-  <li>Use query: <code>event.code:4625</code>.</li>
-  <li>Add fields: <code>source.ip</code> and <code>user.name</code>.</li>
-  <li>Confirm data by matching logon type 3 (network authentication, RDP).</li>
-  <li>Perform manual RDP login attempt to generate test data.</li>
-</ul>
-
-<h2>🚨 Creating an Alert</h2>
-<ul>
-  <li>Save search as <strong>RDP Failed Activity</strong>.</li>
-  <li>Go to <strong>Alerts</strong> → Create a <strong>search threshold rule</strong>.</li>
-  <li>Query: <code>event.code:4625</code>.</li>
-  <li>Threshold: Above 5 failed attempts in 5 minutes.</li>
-  <li>Save and monitor for generated alerts.</li>
-</ul>
-
-<h2>🛡️ Building a Better Detection Rule</h2>
-<ul>
-  <li>Alerts created via Discover provide limited information.</li>
-  <li>Navigate to <strong>Security → Rules → Create new rule</strong> and select <strong>Threshold rule</strong>.</li>
-  <li>Create an SSH brute force rule first:</li>
+<nav>
+  <h3>📚 Table of Contents</h3>
   <ul>
-    <li>Custom query: <code>event.code:4625 AND user.name:root</code>.</li>
-    <li>Group by <code>source.ip</code> and <code>user.name</code>.</li>
-    <li>Threshold: >5 failed attempts in 5 minutes.</li>
-    <li>Add required fields: Source IP and Username.</li>
-    <li>Optional: Add setup guides, investigation guides, references, false positive notes, MITRE ATT&CK mappings.</li>
-    <li>Name the rule: <strong>mydfir SSH Brute Force Attempt</strong>.</li>
+    <li><a href="#demo">Demo: Access Discover</a></li>
+    <li><a href="#find-failed">Finding Failed Authentications</a></li>
+    <li><a href="#create-alert">Creating a Basic Alert</a></li>
+    <li><a href="#detection-rule">Building Better Detection Rules</a></li>
+    <li><a href="#test">Testing the Rule</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
-  <li>Then create an RDP brute force rule:</li>
-  <ul>
-    <li>Custom query: <code>event.code:4625 AND user.name:administrator</code>.</li>
-    <li>Group by <code>source.ip</code> and <code>user.name</code>.</li>
-    <li>Threshold: >5 failed attempts in 5 minutes.</li>
-    <li>Add required fields: Source IP and Username.</li>
-    <li>Name the rule: <strong>mydfir RDP Brute Force Attempt</strong>.</li>
-  </ul>
-  <li>Run both rules every 1 minute with a 5-minute look-back.</li>
+</nav>
+
+<h2 id="demo">🖥️ Demo: Access Discover</h2>
+<ul>
+  <li>Open <strong>Kibana → Discover</strong></li>
+  <li>Set the time range to <strong>Today</strong> (~94,000 events)</li>
+  <li>Filter logs by <code>agent.name</code> of your RDP host</li>
 </ul>
 
-<h2>📈 Testing the Rule</h2>
+<h2 id="find-failed">🔎 Finding Failed Authentications</h2>
 <ul>
-  <li>Simulate a brute force attack using Kali Linux against the Windows server.</li>
-  <li>Confirm alerts are triggered and contain details:</li>
-  <ul>
-    <li>Source IP address.</li>
-    <li>Username involved.</li>
-    <li>Threshold counts.</li>
-  </ul>
-  <li>Insights panel shows additional metadata like SID, domain, OS, first seen, last seen.</li>
-  <li>Visualization features require an Enterprise license (not available in basic version).</li>
+  <li>Look for failed logins using:
+    <pre><code>event.code:4625</code></pre>
+  </li>
+  <li>Add table fields:
+    <ul>
+      <li><code>source.ip</code></li>
+      <li><code>user.name</code></li>
+    </ul>
+  </li>
+  <li>Focus on <strong>logon type 3</strong> (network logon via RDP)</li>
+  <li>Trigger an RDP login failure manually to generate test data</li>
 </ul>
 
-<h2>🧠 Conclusion</h2>
+<h2 id="create-alert">🚨 Creating a Basic Alert</h2>
 <ul>
-  <li>Basic search alerts are good practice, but detailed rules in Security improve visibility dramatically.</li>
-  <li>Explore advanced rule types: event correlation, indicator match, new terms, ES|QL.</li>
-  <li>Understand exposed assets like SSH and RDP — harden accordingly.</li>
-  <li>Use strong passwords, enable MFA, and restrict access as much as possible.</li>
-  <li>By now, you have brute force detection for both Ubuntu (SSH) and Windows (RDP) servers.</li>
-  <li>Next step: Build dashboards to visualize authentication attempts and threat activity over time.</li>
+  <li>Save the search as: <code>RDP Failed Activity</code></li>
+  <li>Go to <strong>Alerts → Create search threshold rule</strong></li>
+  <li>Use the saved query: <code>event.code:4625</code></li>
+  <li>Threshold: more than 5 events in 5 minutes</li>
+  <li>Set alert frequency: every 1 minute</li>
+  <li>Save the alert (no action needed for now)</li>
+</ul>
+
+<h2 id="detection-rule">🛡️ Building a Better Detection Rule</h2>
+<p>For more visibility, use Security → Rules:</p>
+
+<h3>👨‍💻 Create SSH Brute Force Rule</h3>
+<ul>
+  <li>Go to <strong>Security → Rules → Create new → Threshold rule</strong></li>
+  <li>Query:
+    <pre><code>event.code:4625 AND user.name:root</code></pre>
+  </li>
+  <li>Group by: <code>source.ip</code> and <code>user.name</code></li>
+  <li>Threshold: >5 failed logins in 5 minutes</li>
+  <li>Add: IP, Username, and helpful metadata</li>
+  <li>Name the rule: <code>mydfir SSH Brute Force Attempt</code></li>
+</ul>
+
+<h3>🧑‍💻 Create RDP Brute Force Rule</h3>
+<ul>
+  <li>Query:
+    <pre><code>event.code:4625 AND user.name:administrator</code></pre>
+  </li>
+  <li>Group by: <code>source.ip</code> and <code>user.name</code></li>
+  <li>Threshold: >5 attempts in 5 minutes</li>
+  <li>Name it: <code>mydfir RDP Brute Force Attempt</code></li>
+</ul>
+
+<h2 id="test">📈 Testing the Rule</h2>
+<ul>
+  <li>Simulate a brute-force attack from Kali to your Windows server</li>
+  <li>Confirm alert is triggered with:
+    <ul>
+      <li>Source IP</li>
+      <li>Targeted username</li>
+      <li>Trigger count</li>
+    </ul>
+  </li>
+  <li>Review the <strong>Insights panel</strong> for context: domain, SID, OS, timestamps</li>
+  <li>Note: Some advanced visualizations require an Enterprise license</li>
+</ul>
+
+<h2 id="conclusion">🧠 Conclusion</h2>
+<ul>
+  <li>✅ Basic search alerts offer quick wins</li>
+  <li>🛡️ Detailed detection rules provide greater control and visibility</li>
+  <li>💡 Use event correlation, indicator match, and ES|QL for advanced logic</li>
+  <li>🔒 Harden SSH and RDP exposure: strong passwords, MFA, network restrictions</li>
+  <li>🏁 You now have SSH and RDP brute-force detection in place</li>
+  <li>📊 Next: Build dashboards to track authentication trends and attack frequency</li>
 </ul>
