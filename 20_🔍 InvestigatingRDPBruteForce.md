@@ -1,9 +1,24 @@
-<h2>🔍 Investigating RDP Brute Force Attacks</h2>
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#objective">Objective</a></li>
+    <li><a href="#step1">Step 1: Open Security Alerts</a></li>
+    <li><a href="#step2">Step 2: Integrate with OS Ticket</a></li>
+    <li><a href="#step3">Step 3: Investigative Questions</a></li>
+    <li><a href="#step4">Step 4: Post-login Activity</a></li>
+    <li><a href="#step5">Step 5: Time Zone and Timeline</a></li>
+    <li><a href="#timeline">Example Timeline</a></li>
+    <li><a href="#notes">Analyst Notes</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<h2 id="objective">🔍 Investigating RDP Brute Force Attacks</h2>
 
 <h3>🎯 Objective</h3>
 <p>Learn how to investigate an RDP Brute Force alert and analyze potential compromise indicators.</p>
 
-<h3>📥 Step 1: Open Security Alerts in Elastic</h3>
+<h3 id="step1">📥 Step 1: Open Security Alerts in Elastic</h3>
 <ul>
   <li>Log into Kibana and go to <strong>Security > Alerts</strong>.</li>
   <li>Set the time filter to the last 30 days.</li>
@@ -11,14 +26,14 @@
   <li>Click on an alert to view details like source IP, username (e.g., administrator), and number of events.</li>
 </ul>
 
-<h3>⚙️ Step 2: Integrate with OS Ticket (Optional)</h3>
+<h3 id="step2">⚙️ Step 2: Integrate with OS Ticket (Optional)</h3>
 <ul>
   <li>Edit the existing RDP Brute Force detection rule.</li>
   <li>Copy the Webhook action body from SSH rule and apply it to the RDP rule.</li>
   <li>Ensure rule schedule is set to run every 1 minute.</li>
 </ul>
 
-<h3>🔎 Step 3: Investigative Questions</h3>
+<h3 id="step3">🔎 Step 3: Investigative Questions</h3>
 <ol>
   <li><strong>Is the IP known for brute force?</strong><br>
     - Use tools like <a href="https://www.abuseipdb.com/" target="_blank">AbuseIPDB</a> and <a href="https://viz.greynoise.io/" target="_blank">GreyNoise</a>.
@@ -32,21 +47,21 @@
     - Use <code>logon.id</code> from the successful login event and search for activity within that session.</li>
 </ol>
 
-<h3>🕵️‍♂️ Step 4: Analyzing Post-login Activity</h3>
+<h3 id="step4">🕵️‍♂️ Step 4: Analyzing Post-login Activity</h3>
 <ul>
   <li>Filter on <code>host.name</code> and <code>user.name</code>.</li>
   <li>Identify <code>logon.id</code> and use it to search for related events.</li>
   <li>Review signs of privilege escalation, command execution, or logoff events.</li>
 </ul>
 
-<h3>⏱️ Step 5: Time Zone and Timeline</h3>
+<h3 id="step5">⏱️ Step 5: Time Zone and Timeline</h3>
 <ul>
   <li>Go to <strong>Stack Management > Advanced Settings</strong> in Kibana.</li>
   <li>Set time zone to UTC for consistency.</li>
   <li>Create a timeline from first successful login to final logoff for investigation scope.</li>
 </ul>
 
-<h3>📌 Example Timeline</h3>
+<h3 id="timeline">📌 Example Timeline</h3>
 <ul>
   <li><strong>Start:</strong> Aug 12, 2024, 19:56:05 UTC</li>
   <li><strong>End:</strong> Aug 13, 2024, 11:33:40 UTC</li>
@@ -109,11 +124,11 @@
   </tbody>
 </table>
 
-<h3>🧠 Analyst Notes</h3>
+<h3 id="notes">🧠 Analyst Notes</h3>
 <ul>
   <li>Use Kibana to detect patterns like repeated failed logins or new process creation.</li>
   <li>Look for suspicious activity such as account creation, new services, or exfiltration.</li>
 </ul>
 
-<h3>📢 Conclusion</h3>
+<h3 id="conclusion">📢 Conclusion</h3>
 <p>RDP Brute Force investigations follow the same methodology as SSH. Use consistent steps, structured queries, and external IP intelligence to validate threats. Continue with the Mythic C2 agent analysis in Day 28.</p>
