@@ -1,41 +1,56 @@
-<h2>📚 Intro</h2>
+<h1>Intro to Command and Control (C2) and the Mythic Framework</h1>
+
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#malware-execution">What Happens When You Execute Malware?</a></li>
+    <li><a href="#what-is-c2">What is Command & Control (C2)?</a></li>
+    <li><a href="#importance">Why C2 is Important for Attackers</a></li>
+    <li><a href="#c2-tools">Common C2 Tools & Frameworks</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+<h2 id="intro">📚 Introduction</h2>
 <ul>
-  <li>Goal: Understand Command and Control (C2) concepts, importance, common tools, and introduce the Mythic Framework.</li>
+  <li>🎯 Goal: Understand Command and Control (C2) concepts, use cases, popular tools, and the Mythic framework</li>
 </ul>
 
-<h2>🦠 What Happens When You Execute Malware?</h2>
+<h2 id="malware-execution">🦠 What Happens When You Execute Malware?</h2>
 <ul>
-  <li>Malicious executables may run discovery commands like <code>ipconfig</code>, <code>whoami</code>, <code>nslookup</code>, and <code>net user</code>.</li>
-  <li>Persistence might be established through service creation or scheduled tasks.</li>
-  <li>One common goal: establish a Command and Control (C2) session.</li>
+  <li>Malware often runs discovery commands:
+    <pre><code>ipconfig, whoami, nslookup, net user</code></pre>
+  </li>
+  <li>May create scheduled tasks or services to gain persistence</li>
+  <li>Usually aims to establish a persistent Command and Control session</li>
 </ul>
 
-<h2>🔗 What is a C2?</h2>
+<h2 id="what-is-c2">🔗 What is Command & Control (C2)?</h2>
 <ul>
-  <li>C2 (Command and Control) allows attackers to control compromised machines remotely.</li>
-  <li>MITRE ATT&CK Framework defines it as techniques to communicate with controlled systems inside a victim's network.</li>
+  <li>C2 = attacker’s remote access channel into the victim's machine</li>
+  <li>Allows issuing of commands, receiving outputs, deploying payloads</li>
+  <li>MITRE defines C2 as techniques used to communicate with infected hosts</li>
 </ul>
 
-<h2>❓ Why is C2 Important for Attackers?</h2>
+<h2 id="importance">❓ Why is C2 Important for Attackers?</h2>
 <ul>
-  <li>It enables attackers to steal credentials, move laterally, extract sensitive data, or deploy ransomware.</li>
-  <li>Without persistent access like C2, attackers cannot perform extended operations inside environments.</li>
-  <li>18 techniques for C2 establishment are documented in MITRE ATT&CK Framework.</li>
+  <li>Facilitates long-term access inside networks</li>
+  <li>Used to steal credentials, move laterally, exfiltrate data, or deploy ransomware</li>
+  <li>Without C2, attackers lose control after reboot/logoff</li>
+  <li>18 C2-related techniques are listed in the MITRE ATT&CK Matrix</li>
 </ul>
 
-<h2>🛠️ Common C2 Tools & Frameworks</h2>
+<h2 id="c2-tools">🛠️ Common C2 Tools & Frameworks</h2>
 <ul>
-  <li><strong>Metasploit</strong> — Popular exploit framework included in Kali Linux, used for vulnerability exploitation and control.</li>
-  <li><strong>Cobalt Strike</strong> — Commercial adversary simulation tool often abused by real attackers; detection guides exist (e.g., DFIR Report).</li>
-  <li><strong>Sliver</strong> — Open-source C2 developed by Bishop Fox; supports mTLS, HTTP/S, DNS, WireGuard communication.</li>
-  <li><strong>Mythic</strong> — The focus of this challenge; an open-source C2 framework using Golang, Docker, and web UI for payload tracking.</li>
+  <li><strong>Metasploit</strong>: Built-in Kali Linux framework for exploitation and C2</li>
+  <li><strong>Cobalt Strike</strong>: Commercial red team tool, commonly abused by threat actors</li>
+  <li><strong>Sliver</strong>: Open-source C2 that supports mTLS, DNS, WireGuard, etc.</li>
+  <li><strong>Mythic</strong>: Modern, open-source Golang/Docker-based C2 with web UI and payload visibility</li>
 </ul>
 
-<h2>🧠 Conclusion</h2>
+<h2 id="conclusion">🧠 Conclusion</h2>
 <ul>
-  <li>Command and Control is critical for attacker persistence and control within networks.</li>
-  <li>Familiarity with common C2 frameworks (Metasploit, Cobalt Strike, Sliver, Mythic) is essential for SOC analysts.</li>
-  
+  <li>Understanding C2 is crucial for effective threat detection and incident response</li>
+  <li>SOC analysts should be familiar with how common C2 frameworks work and how to detect them</li>
 </ul>
-
-
