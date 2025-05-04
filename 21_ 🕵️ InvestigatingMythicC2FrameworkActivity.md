@@ -1,4 +1,18 @@
-<h2>🕵️ Investigating Mythic C2 Framework Activity</h2>
+<h1>Day 28 - Mythic C2 Detection via Sysmon and Elastic</h1>
+
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#goals">Investigation Goals</a></li>
+    <li><a href="#indicators">Initial Indicators</a></li>
+    <li><a href="#timeline">Key Events Timeline</a></li>
+    <li><a href="#strategy">Detection Strategy</a></li>
+    <li><a href="#tips">Analyst Tips</a></li>
+    <li><a href="#takeaways">Takeaways</a></li>
+  </ul>
+</nav>
+
+<h2 id="goals">🕵️ Investigating Mythic C2 Framework Activity</h2>
 
 <h3>🎯 Investigation Goals</h3>
 <ul>
@@ -8,14 +22,14 @@
   <li>Highlight importance of endpoint and network telemetry</li>
 </ul>
 
-<h3>🚩 Initial Indicators</h3>
+<h2 id="indicators">🚩 Initial Indicators</h2>
 <ul>
   <li>C2 Agent: <code>servicehost-handlename.exe</code></li>
   <li>Suspicious path: <code>C:\Users\Public\Downloads</code></li>
   <li>Outbound traffic to Port <code>80</code> and <code>9999</code></li>
 </ul>
 
-<h3>🗓️ Key Events Timeline</h3>
+<h2 id="timeline">🗓️ Key Events Timeline</h2>
 <table border="1" cellpadding="6" cellspacing="0">
   <thead>
     <tr>
@@ -77,21 +91,21 @@
   </tbody>
 </table>
 
-<h3>🔍 Detection Strategy</h3>
+<h2 id="strategy">🔍 Detection Strategy</h2>
 <ul>
   <li>Pivoted using <code>process.guid</code> for event correlation</li>
   <li>Cross-referenced Event IDs 1, 3, 11, and 29 from Sysmon</li>
   <li>Used Elastic detection rules with OS Ticket webhook for alerting</li>
 </ul>
 
-<h3>💡 Analyst Tips</h3>
+<h2 id="tips">💡 Analyst Tips</h2>
 <ul>
   <li>Always monitor both endpoint and network telemetry</li>
   <li>Be alert to unexpected binaries in <code>Public\Downloads</code></li>
   <li>Use dashboards to track PowerShell, RunDLL32, and suspicious ports</li>
 </ul>
 
-<h3>📎 Takeaways</h3>
+<h2 id="takeaways">📎 Takeaways</h2>
 <ul>
   <li>Mythic C2 agents can be caught using endpoint logs, if well instrumented</li>
   <li>Even stealthy malware leaves behind process and file traces</li>
