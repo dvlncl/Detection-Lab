@@ -1,49 +1,72 @@
-<h2>Sysmon for Endpoint Visibility</h2>
+<h1>Sysmon for Endpoint Visibility Lab</h1>
 
-<h3>🔍 Why Endpoint Visibility Matters</h3>
-<p>Having the right visibility into your endpoints is critical for investigation and detection. While Windows does enable basic logging by default, it does not include essential logs such as process creation or network connections. To enhance visibility, analysts can:</p>
+<nav>
+  <h3>📚 Table of Contents</h3>
+  <ul>
+    <li><a href="#importance">Why Endpoint Visibility Matters</a></li>
+    <li><a href="#what-is-sysmon">What is Sysmon?</a></li>
+    <li><a href="#key-features">Key Features of Sysmon</a></li>
+    <li><a href="#event-ids">Recommended Event IDs</a></li>
+    <li><a href="#notes">Important Notes</a></li>
+    <li><a href="#example">Real-World Example</a></li>
+    <li><a href="#more-events">Explore More Event IDs</a></li>
+  </ul>
+</nav>
+
+<h2 id="importance">🔍 Why Endpoint Visibility Matters</h2>
+<p>Basic Windows logging does not include vital events like process creation or network activity. To gain deeper visibility for detection and investigation, analysts should:</p>
 <ul>
-  <li>Manually configure Windows audit policies</li>
-  <li>Or install a tool like <strong>Sysmon</strong> (System Monitor)</li>
+  <li>Manually configure Windows Audit Policies</li>
+  <li>Or install <strong>Sysmon</strong> (System Monitor) for enhanced telemetry</li>
 </ul>
 
-<h3>✅ What is Sysmon?</h3>
-<p>Sysmon is a free tool by Microsoft, part of the Sysinternals Suite. It greatly enhances endpoint telemetry by logging critical system activity like:</p>
+<h2 id="what-is-sysmon">✅ What is Sysmon?</h2>
+<p>
+  <strong>Sysmon</strong> is a free Windows system monitoring tool from Microsoft’s Sysinternals Suite.  
+  It enhances endpoint visibility by logging:
+</p>
 <ul>
   <li>Process creations (with command-line, hashes, GUIDs)</li>
-  <li>Network connections (source/destination IPs and ports)</li>
-  <li>File and driver loads</li>
-  <li>Remote thread creations</li>
+  <li>Network connections (IP/port-level logging)</li>
+  <li>Driver and image loads</li>
+  <li>Remote thread creation and inter-process access</li>
 </ul>
-<p>Sysmon is configurable via a custom XML configuration file that controls what events are logged.</p>
+<p>Sysmon is configured with a custom XML file to control which events are logged.</p>
 
-<h3>🧠 Key Features of Sysmon</h3>
+<h2 id="key-features">🧠 Key Features of Sysmon</h2>
 <ul>
-  <li><strong>Process Creation</strong> – Includes parent/child process relationships and command line</li>
-  <li><strong>File Hashing</strong> – Logs MD5, SHA1, or SHA256 for binary identification</li>
-  <li><strong>Process GUID</strong> – Enables correlation across multiple events for the same process</li>
-  <li><strong>Network Monitoring</strong> – Logs source/destination IPs and associated processes (disabled by default)</li>
+  <li><strong>Process Creation</strong> – Captures command-line args, parent process, and user</li>
+  <li><strong>File Hashing</strong> – Generates hashes (MD5, SHA1, SHA256) to identify executables</li>
+  <li><strong>Process GUID</strong> – Tracks activities of the same process across different logs</li>
+  <li><strong>Network Monitoring</strong> – Logs source/destination IPs + ports (must be enabled)</li>
 </ul>
 
-<h3>📌 Recommended Event IDs to Monitor</h3>
-
+<h2 id="event-ids">📌 Recommended Event IDs to Monitor</h2>
 <ul>
-  <li><strong>Event ID 1 – Process Creation:</strong> Logs new process activity, command-line, file hash, etc.</li>
-  <li><strong>Event ID 3 – Network Connection:</strong> Tracks outbound/inbound connections from processes (requires config to enable).</li>
-  <li><strong>Event ID 6, 7, 8 – Driver Load, Image Load, Create Remote Thread:</strong> May indicate defense evasion or process injection techniques.</li>
-  <li><strong>Event ID 10 – Process Access:</strong> Used to detect access to critical processes like LSASS (often for credential theft).</li>
-  <li><strong>Event ID 22 – DNS Query:</strong> Reveals domains being resolved. Useful for spotting DGA-based malware or C2 communications.</li>
-  <li><a href="https://github.com/dvinci200570197/Detection-Lab/blob/main/%F0%9F%AA%B5Sysmon.md">Click here for more</a></li>
+  <li><strong>Event ID 1 – Process Creation:</strong> Logs command-line, file hash, user context</li>
+  <li><strong>Event ID 3 – Network Connection:</strong> Records process-level TCP/UDP connections (must enable)</li>
+  <li><strong>Event IDs 6, 7, 8:</strong> Driver Load, Image Load, Create Remote Thread – often signal stealth or injection</li>
+  <li><strong>Event ID 10 – Process Access:</strong> Flags access to sensitive processes like LSASS</li>
+  <li><strong>Event ID 22 – DNS Query:</strong> Monitors domain lookups — helps detect DGA/C2 activity</li>
+  <li><a href="https://github.com/dvinci200570197/Detection-Lab/blob/main/%F0%9F%AA%B5Sysmon.md" target="_blank">📎 View Sample Config & Full Event Reference</a></li>
 </ul>
 
-<h3>⚠️ Important Notes</h3>
+<h2 id="notes">⚠️ Important Notes</h2>
 <ul>
   <li>Events like <strong>3 (Network)</strong> and <strong>7 (Image Load)</strong> are <em>disabled by default</em> and must be enabled in the Sysmon config.</li>
-  <li>Some events are noisy and prone to false positives. Use <strong>Process GUID</strong> to correlate events and build accurate timelines.</li>
+  <li>Some events can be noisy — use <strong>Process GUID</strong> to correlate them into coherent timelines.</li>
 </ul>
 
-<h3>🧩 Real-World Example</h3>
-<p>Imagine an unknown binary is executed from <code>C:\Temp</code>. Sysmon logs this as Event ID 1. Later, the same process opens a suspicious connection — logged as Event ID 3. Both events share the same Process GUID, making it easy to trace the attack path.</p>
+<h2 id="example">🧩 Real-World Example</h2>
+<p>
+  Suppose a suspicious binary runs from <code>C:\Temp</code> — Sysmon logs it under Event ID 1.  
+  Moments later, it creates an outbound connection — logged as Event ID 3.  
+  Both share the same <strong>Process GUID</strong>, helping analysts trace its full behavior easily.
+</p>
 
-<h3>📚 Explore More Event IDs</h3>
-<p>Sysmon v15.15 supports 30+ event types. You are encouraged to explore all of them and tailor your configuration to fit your threat model. A full reference link is usually provided in training content or Microsoft's official documentation.</p>
+<h2 id="more-events">📚 Explore More Event IDs</h2>
+<p>
+  Sysmon (v15.15+) supports over 30 unique event types.  
+  You’re encouraged to review the full list and tailor the configuration to your organization's threat model.  
+  Visit the official Microsoft Docs or training repositories for detailed schemas.
+</p>
