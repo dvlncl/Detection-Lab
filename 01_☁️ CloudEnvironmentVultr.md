@@ -18,7 +18,7 @@
 
 <h2 id="prerequisites">✅ Prerequisites</h2>
 <ul>
-  <li>Vultr account: <a href="https://www.vultr.com/?ref=9758799-9J" target="_blank">https://www.vultr.com</a></li>
+  <li>Vultr account: <a href="https://www.vultr.com/?ref=9770421-9J" target="_blank">https://www.vultr.com</a></li>
   <li>Basic knowledge of Linux & SSH</li>
   <li>PowerShell, MobaXterm, or Terminal access</li>
 </ul>
